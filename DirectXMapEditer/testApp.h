@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectXApp.h"
 
-namespace DirectXApp
+namespace DirectXFramework
 {
 	class TestApp : public DirectXApp
 	{
@@ -11,6 +11,7 @@ namespace DirectXApp
 		~TestApp() = default;
 
 		void Render();
+		void CreateShader();
 
 	private :
 

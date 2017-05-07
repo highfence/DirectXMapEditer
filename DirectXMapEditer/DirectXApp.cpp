@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DirectXApp.h"
 
-namespace DirectXApp
+namespace DirectXFramework
 {
 	bool DirectXApp::Init(HWND hWnd, const int width, const int height)
 	{
@@ -17,6 +17,9 @@ namespace DirectXApp
 
 	void DirectXApp::Release()
 	{
+		if (m_pVertexShader) m_pVertexShader->Release();
+		if (m_pVertexLayout) m_pVertexLayout->Release();
+		if (m_pVertexBuffer) m_pVertexBuffer->Release();
 		if (m_pRenderTargetView) m_pRenderTargetView->Release();
 		if (m_pImmediateContext) m_pImmediateContext->Release();
 		if (m_pSwapChain) m_pSwapChain->Release();
@@ -91,5 +94,72 @@ namespace DirectXApp
 	{
 		m_Width = width;
 		m_Height = height;
+	}
+
+	bool DirectXApp::CreateShader(const wchar_t * shaderPath, D3D11_INPUT_ELEMENT_DESC* layout, UINT layoutSize)
+	{
+		ID3DBlob* pErrorBlob = nullptr;
+		ID3DBlob* pVSBlob = nullptr;
+		HRESULT hr = D3DX11CompileFromFile(
+			shaderPath, 0, 0,
+			"VS", "vs_5_0",
+			0, 0, 0,
+			&pVSBlob, &pErrorBlob, 0);
+
+		if (FAILED(hr)) return false;
+
+		hr = m_pD3dDevice->CreateVertexShader(
+			pVSBlob->GetBufferPointer(),
+			pVSBlob->GetBufferSize(),
+			0, &m_pVertexShader);
+
+		if (FAILED(hr)) return false;
+
+		// 확인해야함. 레이아웃을 이렇게 밖에서 받아도 되는지?
+		hr = m_pD3dDevice->CreateInputLayout(layout, layoutSize, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pVertexLayout);
+
+		if (FAILED(hr)) return false;
+
+		ID3DBlob* pPSBlob = nullptr;
+		D3DX11CompileFromFile(shaderPath, 0, 0,
+			"PS", "ps_5_0",
+			0, 0, 0,
+			&pPSBlob, &pErrorBlob, 0);
+
+		hr = m_pD3dDevice->CreatePixelShader(
+			pPSBlob->GetBufferPointer(),
+			pPSBlob->GetBufferSize(),
+			0, &m_pPixelShader);
+
+		if (FAILED(hr)) return false;
+
+		pVSBlob->Release();
+		return true;
+	}
+
+	bool DirectXApp::CreateVertexBuffer()
+	{
+		MyVertex vertices[] =
+		{
+			{ XMFLOAT3(0.f, 1.f, 1.f) },
+			{ XMFLOAT3(0.5f, -0.5f, 1.0f) },
+			{ XMFLOAT3(-0.5f, -0.5f, 1.0f) },
+		};
+
+		D3D11_BUFFER_DESC bd;
+		ZeroMemory(&bd, sizeof(bd));
+		bd.ByteWidth = sizeof(vertices);
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bd.CPUAccessFlags = 0;
+
+		D3D11_SUBRESOURCE_DATA initData;
+		ZeroMemory(&initData, sizeof(initData));
+		initData.pSysMem = vertices;
+		auto hr = m_pD3dDevice->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
+
+		if (FAILED(hr)) return false;
+
+		return true;
 	}
 }

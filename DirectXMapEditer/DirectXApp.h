@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 
-namespace DirectXApp
+namespace DirectXFramework
 {
 
 	class DirectXApp
@@ -19,12 +19,18 @@ namespace DirectXApp
 
 		bool InitDevice();
 		void SetWindowSize(const int width, const int height);
+		bool CreateShader(const wchar_t* shaderPath, D3D11_INPUT_ELEMENT_DESC* layout, UINT layoutSize);
+		bool CreateVertexBuffer();
 
 		HWND m_hWnd = nullptr;
 		IDXGISwapChain* m_pSwapChain = nullptr;
 		ID3D11Device* m_pD3dDevice = nullptr;
 		ID3D11DeviceContext* m_pImmediateContext = nullptr;
 		ID3D11RenderTargetView* m_pRenderTargetView = nullptr;
+		ID3D11VertexShader* m_pVertexShader = nullptr;
+		ID3D11InputLayout* m_pVertexLayout = nullptr;
+		ID3D11Buffer* m_pVertexBuffer = nullptr;
+		ID3D11PixelShader* m_pPixelShader = nullptr;
 
 		D3D_FEATURE_LEVEL m_FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 

@@ -41,5 +41,13 @@
     <ClInclude Include="testApp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Definition.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="MyShader.fx">
+      <Filter>리소스 파일</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

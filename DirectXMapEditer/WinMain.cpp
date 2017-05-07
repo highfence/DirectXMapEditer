@@ -3,7 +3,7 @@
 #include "DirectXApp.h"
 #include "testApp.h"
 
-using namespace DirectXApp;
+using namespace DirectXFramework;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -47,6 +47,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCm
 	
 	TestApp app;
 	app.Init(hWnd, 800, 600);
+	app.CreateShader();
 
 	MSG			msg;
 	while (true)
