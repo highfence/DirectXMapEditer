@@ -15,6 +15,14 @@ namespace DirectXApp
 		return true;
 	}
 
+	void DirectXApp::Release()
+	{
+		if (m_pRenderTargetView) m_pRenderTargetView->Release();
+		if (m_pImmediateContext) m_pImmediateContext->Release();
+		if (m_pSwapChain) m_pSwapChain->Release();
+		if (m_pD3dDevice) m_pD3dDevice->Release();
+	}
+
 	bool DirectXApp::InitDevice()
 	{
 		HRESULT hr = S_OK;

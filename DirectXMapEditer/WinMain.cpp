@@ -1,5 +1,9 @@
+#include "stdafx.h"
 #include "WinMain.h"
+#include "DirectXApp.h"
+#include "testApp.h"
 
+using namespace DirectXApp;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -40,14 +44,32 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCm
 		return 0;
 
 	ShowWindow(hWnd, nCmdShow);
+	
+	TestApp app;
+	app.Init(hWnd, 800, 600);
 
 	MSG			msg;
-	while( GetMessage(&msg, NULL, 0, 0) )
+	while (true)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+			else
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			app.Render();
+		}
 	}
 
+	app.Release();
 	return (int)msg.wParam;
 }
 

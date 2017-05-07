@@ -11,10 +11,11 @@ namespace DirectXApp
 		DirectXApp() = default;
 		virtual ~DirectXApp() = default;
 
-		bool Init(HWND hWnd, const int width, const int height);
+		virtual bool Init(HWND hWnd, const int width, const int height);
+		virtual void Release();
 		virtual void Render() = 0;
 
-	private:
+	protected :
 
 		bool InitDevice();
 		void SetWindowSize(const int width, const int height);
@@ -26,6 +27,8 @@ namespace DirectXApp
 		ID3D11RenderTargetView* m_pRenderTargetView = nullptr;
 
 		D3D_FEATURE_LEVEL m_FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+
+	private:
 
 		int m_Width = 0;
 		int m_Height = 0;
