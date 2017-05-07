@@ -11,10 +11,13 @@ namespace DirectXFramework
 		~TestApp() = default;
 
 		void Render();
-		void CreateShaderAndVertex();
+		void ShaderSetting();
 
 	private :
 
+		void CreateShader();
+		void CreateVertexBuffer();
+		void CreateIndexBuffer();
 
 	};
 }

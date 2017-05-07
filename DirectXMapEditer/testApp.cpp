@@ -25,7 +25,16 @@ namespace DirectXFramework
 		m_pSwapChain->Present(0, 0);
 	}
 
-	void TestApp::CreateShaderAndVertex()
+	void TestApp::ShaderSetting()
+	{
+		CreateShader();
+
+		CreateVertexBuffer();
+
+		CreateIndexBuffer();
+	}
+
+	void TestApp::CreateShader()
 	{
 		D3D11_INPUT_ELEMENT_DESC layout[] = 
 		{
@@ -35,7 +44,10 @@ namespace DirectXFramework
 		UINT layoutSize = ARRAYSIZE(layout);
 
 		DirectXApp::CreateShader(L"MyShader.fx", layout, layoutSize);
+	}
 
+	void TestApp::CreateVertexBuffer()
+	{
 		MyVertex vertices[] =
 		{
 			{ XMFLOAT3(-0.5f, 0.5f, 1.f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
@@ -44,7 +56,10 @@ namespace DirectXFramework
 			{ XMFLOAT3(-0.5f, -0.5f, 1.f), XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f) },
 		};
 		DirectXApp::CreateVertexBuffer(vertices, sizeof(vertices));
+	}
 
+	void TestApp::CreateIndexBuffer()
+	{
 		UINT indices[] =
 		{
 			0, 1, 2,
