@@ -1,14 +1,34 @@
 #pragma once
 #include <Windows.h>
 
-class DirectXApp
+namespace DirectXApp
 {
-public :
-	DirectXApp() = default;
-	virtual ~DirectXApp() = default;
 
-private :
-	HWND m_hWnd = nullptr;
-	
+	class DirectXApp
+	{
+	public:
 
-};
+		DirectXApp() = default;
+		virtual ~DirectXApp() = default;
+
+		bool Init(HWND hWnd, const int width, const int height);
+		virtual void Render() = 0;
+
+	private:
+
+		bool InitDevice();
+		void SetWindowSize(const int width, const int height);
+
+		HWND m_hWnd = nullptr;
+		IDXGISwapChain* m_pSwapChain = nullptr;
+		ID3D11Device* m_pD3dDevice = nullptr;
+		ID3D11DeviceContext* m_pImmediateContext = nullptr;
+		ID3D11RenderTargetView* m_pRenderTargetView = nullptr;
+
+		D3D_FEATURE_LEVEL m_FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+
+		int m_Width = 0;
+		int m_Height = 0;
+
+	};
+}
