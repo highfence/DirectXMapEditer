@@ -47,7 +47,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCm
 	
 	TestApp app;
 	app.Init(hWnd, 800, 600);
-	app.CreateShader();
+	app.CreateShaderAndVertex();
 
 	MSG			msg;
 	while (true)

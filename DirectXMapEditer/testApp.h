@@ -11,7 +11,7 @@ namespace DirectXFramework
 		~TestApp() = default;
 
 		void Render();
-		void CreateShader();
+		void CreateShaderAndVertex();
 
 	private :
 

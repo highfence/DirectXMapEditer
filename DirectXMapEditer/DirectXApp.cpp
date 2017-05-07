@@ -17,6 +17,7 @@ namespace DirectXFramework
 
 	void DirectXApp::Release()
 	{
+		if (m_pIndexBuffer) m_pIndexBuffer->Release();
 		if (m_pVertexShader) m_pVertexShader->Release();
 		if (m_pVertexLayout) m_pVertexLayout->Release();
 		if (m_pVertexBuffer) m_pVertexBuffer->Release();
@@ -137,12 +138,12 @@ namespace DirectXFramework
 		return true;
 	}
 
-	bool DirectXApp::CreateVertexBuffer(MyVertex* vertices)
+	bool DirectXApp::CreateVertexBuffer(MyVertex* vertices, UINT verticesNumber)
 	{
 
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
-		bd.ByteWidth = sizeof(vertices);
+		bd.ByteWidth = verticesNumber;
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = 0;
@@ -153,6 +154,23 @@ namespace DirectXFramework
 		auto hr = m_pD3dDevice->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
 
 		if (FAILED(hr)) return false;
+
+		return true;
+	}
+
+	bool DirectXApp::CreateIndexBuffer(UINT * indices, UINT indicesSize)
+	{
+		D3D11_BUFFER_DESC ibd;
+		ZeroMemory(&ibd, sizeof(ibd));
+		ibd.ByteWidth = indicesSize;
+		ibd.Usage = D3D11_USAGE_IMMUTABLE;
+		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		ibd.CPUAccessFlags = 0;
+
+		D3D11_SUBRESOURCE_DATA iinitData;
+		ZeroMemory(&iinitData, sizeof(iinitData));
+		iinitData.pSysMem = indices;
+		m_pD3dDevice->CreateBuffer(&ibd, &iinitData, &m_pIndexBuffer);
 
 		return true;
 	}
