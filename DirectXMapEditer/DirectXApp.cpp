@@ -137,14 +137,8 @@ namespace DirectXFramework
 		return true;
 	}
 
-	bool DirectXApp::CreateVertexBuffer()
+	bool DirectXApp::CreateVertexBuffer(MyVertex* vertices)
 	{
-		MyVertex vertices[] =
-		{
-			{ XMFLOAT3(0.f, 1.f, 1.f) },
-			{ XMFLOAT3(0.5f, -0.5f, 1.0f) },
-			{ XMFLOAT3(-0.5f, -0.5f, 1.0f) },
-		};
 
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));

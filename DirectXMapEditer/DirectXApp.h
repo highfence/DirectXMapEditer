@@ -20,7 +20,7 @@ namespace DirectXFramework
 		bool InitDevice();
 		void SetWindowSize(const int width, const int height);
 		bool CreateShader(const wchar_t* shaderPath, D3D11_INPUT_ELEMENT_DESC* layout, UINT layoutSize);
-		bool CreateVertexBuffer();
+		bool CreateVertexBuffer(MyVertex* vertices);
 
 		HWND m_hWnd = nullptr;
 		IDXGISwapChain* m_pSwapChain = nullptr;

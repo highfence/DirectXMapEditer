@@ -36,6 +36,12 @@ namespace DirectXFramework
 
 		DirectXApp::CreateShader(L"MyShader.fx", layout, layoutSize);
 
-		DirectXApp::CreateVertexBuffer();
+		MyVertex vertices[] =
+		{
+			{ XMFLOAT3(0.f, 1.f, 1.f) },
+			{ XMFLOAT3(0.5f, -0.5f, 1.0f) },
+			{ XMFLOAT3(-0.5f, -0.5f, 1.0f) },
+		};
+		DirectXApp::CreateVertexBuffer(vertices);
 	}
 }
