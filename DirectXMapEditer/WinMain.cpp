@@ -2,6 +2,7 @@
 #include "WinMain.h"
 #include "DirectXApp.h"
 #include "testApp.h"
+#include "GameTimer.h"
 
 using namespace DirectXFramework;
 
@@ -66,7 +67,9 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCm
 		}
 		else
 		{
-			app.Render();
+			static float dt = 0;
+			dt += 0.0005f;
+			app.Render(dt);
 		}
 	}
 

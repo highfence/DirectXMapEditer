@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+class GameTimer;
 
 namespace DirectXFramework
 {
@@ -13,7 +14,8 @@ namespace DirectXFramework
 
 		virtual bool Init(HWND hWnd, const int width, const int height);
 		virtual void Release();
-		virtual void Render() = 0;
+		virtual void Render(float deltaTime) = 0;
+		GameTimer* GetTimer() { return m_pTimer; };
 
 	protected :
 
@@ -22,6 +24,7 @@ namespace DirectXFramework
 		bool CreateShader(const wchar_t* shaderPath, D3D11_INPUT_ELEMENT_DESC* layout, UINT layoutSize);
 		bool CreateVertexBuffer(MyVertex* vertices, UINT verticesNumber);
 		bool CreateIndexBuffer(UINT* indices, UINT indicesSize);
+		bool CreateConstantBuffer();
 
 		HWND m_hWnd = nullptr;
 		IDXGISwapChain* m_pSwapChain = nullptr;
@@ -36,8 +39,14 @@ namespace DirectXFramework
 
 		D3D_FEATURE_LEVEL m_FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	private:
+		XMMATRIX m_World;
+		XMMATRIX m_View;
+		XMMATRIX m_Projection;
+		ID3D11Buffer* m_pConstantBuffer = nullptr;
 
+	private :
+
+		GameTimer* m_pTimer;
 		int m_Width = 0;
 		int m_Height = 0;
 

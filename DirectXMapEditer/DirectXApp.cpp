@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DirectXApp.h"
+#include "GameTimer.h"
 
 namespace DirectXFramework
 {
@@ -12,11 +13,15 @@ namespace DirectXFramework
 
 		if (!InitDevice()) return false;
 
+		m_pTimer = new GameTimer();
+		m_pTimer->Reset();
+
 		return true;
 	}
 
 	void DirectXApp::Release()
 	{
+		if (m_pConstantBuffer) m_pConstantBuffer->Release();
 		if (m_pIndexBuffer) m_pIndexBuffer->Release();
 		if (m_pVertexShader) m_pVertexShader->Release();
 		if (m_pVertexLayout) m_pVertexLayout->Release();
@@ -171,6 +176,20 @@ namespace DirectXFramework
 		ZeroMemory(&iinitData, sizeof(iinitData));
 		iinitData.pSysMem = indices;
 		m_pD3dDevice->CreateBuffer(&ibd, &iinitData, &m_pIndexBuffer);
+
+		return true;
+	}
+
+	bool DirectXApp::CreateConstantBuffer()
+	{
+		D3D11_BUFFER_DESC cbd;
+		ZeroMemory(&cbd, sizeof(cbd));
+
+		cbd.Usage = D3D11_USAGE_DEFAULT;
+		cbd.ByteWidth = sizeof(ConstantBuffer);
+		cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbd.CPUAccessFlags = 0;
+		m_pD3dDevice->CreateBuffer(&cbd, NULL, &m_pConstantBuffer);
 
 		return true;
 	}

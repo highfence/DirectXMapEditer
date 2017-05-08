@@ -10,7 +10,7 @@ namespace DirectXFramework
 		TestApp() = default;
 		~TestApp() = default;
 
-		void Render();
+		void Render(float deltaTime) override;
 		void ShaderSetting();
 
 	private :
@@ -18,6 +18,8 @@ namespace DirectXFramework
 		void CreateShader();
 		void CreateVertexBuffer();
 		void CreateIndexBuffer();
+		void InitMatrix();
+		void CalculateMatrixForBox(float deltaTime);
 
 	};
 }

@@ -1,3 +1,7 @@
+cbuffer ConstantBuffer
+{
+	float4x4 wvp;
+};
 
 struct VertexIn
 {
@@ -14,7 +18,7 @@ struct VertexOut
 VertexOut VS(VertexIn vIn) 
 {
 	VertexOut vOut;
-	vOut.pos = float4(vIn.pos, 1.f);
+	vOut.pos = mul(float4(vIn.pos, 1.0f), wvp);
 	vOut.color = vIn.color;
 
 	return vOut;
