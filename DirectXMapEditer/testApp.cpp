@@ -3,7 +3,6 @@
 
 namespace DirectXFramework
 {
-	// TODO :: 렌더를 어떻게 처리하지?
 	void TestApp::Render(float deltaTime)
 	{
 		float clearColor[4] = { 0.f, 0.125f, 0.3f, 1.0f };
